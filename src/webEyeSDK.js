@@ -2,7 +2,7 @@ import performance from "./performance";
 import error from "./error";
 import behavior from "./behavior";
 
-import { setConfig } from './config'
+import { getConfig, setConfig } from './config'
 import { lazyReportBatch } from "./report";
 
 //针对 vue / react 的 收集
@@ -62,6 +62,7 @@ function errorBoundary(err, info) {
 */
 export function init(options) {
     setConfig(options)
+    error()
 }
 
 export default {
