@@ -3,7 +3,7 @@ import { lazyReportBatch } from "../report"
 //重写原来的 xhr
 export const originalProto = XMLHttpRequest.prototype
 export const originalSend = originalProto.send
-export const originalOpen = originalOpen.open
+export const originalOpen = originalProto.open
 
 function overwriteAndSend() {
     originalProto.open = function newOpen(...args) {

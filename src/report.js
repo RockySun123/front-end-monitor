@@ -25,12 +25,15 @@ export function report(data) {
 
     //上报数据使用图片的方式
     if (config.isImageUpload) {
+        console.log('使用图片方式上报数据')
         imgRequest(reportData)
     } else {
         //发送数据,优先使用 sendBeacon
         if (window.navigator.sendBeacon) {
+            console.log('使用 sendBeacon 方式上报数据')
             beaconRequest(reportData)
         } else {
+            console.log('使用 xhr 方式上报数据')
             xhrRequest(reportData)
         }
     }
@@ -75,19 +78,19 @@ export function xhrRequest(data) {
 
 
 
-// const sendBeacon = isSupportSendBeacon() ? navigator.sendBeacon : xhrRequest
+
 //sendBeacon 上报
 export function beaconRequest(data) {
-    //浏览器空闲时发送数据
+    // //浏览器空闲时发送数据
     if (window.requestIdleCallback) {
         window.requestIdleCallback(() => {
-            sendBeacon(config.url, data)
+            navigator.sendBeacon(config.url, data)
         }, {
             timeout: 3000 //最大延迟3s,3s内的空闲时间上报
         })
     } else {
         setTimeout(() => {
-            sendBeacon(config.url, data)
+            navigator.sendBeacon(config.url, data)
         })
     }
 }

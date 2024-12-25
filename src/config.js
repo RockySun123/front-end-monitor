@@ -14,10 +14,15 @@ const config = {
 //设置config
 export function setConfig(options) {
     for (const key in config) {
-        if (options[key]) {
+        if (options[key] !== undefined) {
             config[key] = options[key]
+
         }
     }
+}
+
+export function getConfig() {
+    return config
 }
 
 export default config
