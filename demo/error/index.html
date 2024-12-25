@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+
+</head>
+<script src="../../dist/monitor.js"></script>
+<script>
+
+    // navigator.sendBeacon('http://localhost:9800/reportData', JSON.stringify({ aaaa: 'aaaa' }))
+
+    console.log(monitor)
+    monitor.init({
+        url: 'http://localhost:9800/reportData',
+        isImageUpload: false
+    })
+</script>
+
+<body>
+    <img src="http://toutiao.com/x.png" />
+    <img src="http://toutiao.com/x2.png" />
+    <img src="http://toutiao.com/x3.png" />
+    <script src="http://biaidu/xxxxx.js" crossorigin="anonymous"></script>
+    <script>
+        function test() {
+            return Promise.reject(Error('promise'))
+        }
+        function test1() {
+            return Promise.reject(Error('async'))
+        }
+        test()
+        test1()
+        throw Error('test')
+    </script>
+</body>
+
+</html>
