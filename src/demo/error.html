@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <img src="xxxx.jpg" /> -->
+</body>
+<script>
+    // setTimeout(() => {
+    //     try {
+    //         console.log('1->begin')
+    //         error;
+    //         console.log('1->end')
+    //     } catch (e) {
+    //         console.log(e)
+    //     }
+    // })
+
+    // function fn() {
+    //     console.log('1->begin')
+    //     error;
+    //     console.log('1->end')
+    // }
+    // setTimeout(() => {
+    //     try {
+    //         fn();
+    //     } catch (e) {
+    //         console.log(e);
+    //     }
+    // })
+
+    // function fn() {
+    //     console.log('1->begin')
+    //     error;
+    //     console.log('1->end')
+    // }
+    // try {
+    //     //这里捕获不到
+    //     setTimeout(() => {
+    //         fn()
+    //     })
+    // } catch (e) {
+    //     console.log('catch', 4)
+    // }
+
+    // function fn() {
+    //     console.log('1->begin')
+    //     error;
+    //     console.log('1->end')
+    // }
+    // window.onerror = (...args) => {//捕获不了静态资源加载的错误
+    //     console.log('onerror', args)
+    // }
+    // setTimeout(() => { fn() })
+
+    window.addEventListener('error', (...args) => {
+        console.log('error event: ', args)
+        return true
+    },
+        true //捕获阶段，非冒泡
+    )
+
+    const asyncFn = () => new Promise((resolve, reject) => {
+        error()
+    })
+    // .catch(err => {
+    //     console.log(err)
+    // })
+
+    window.addEventListener('unhandledrejection', (event) => {
+        // console.log('unhandledrejection', event)
+        throw event.reason
+    }, true)
+
+    setTimeout(async () => {
+        // try {
+        await asyncFn()
+        // } catch (e) {
+        //     console.log(e)
+        // }
+    })
+
+</script>
+
+</html>
