@@ -51,6 +51,22 @@ export function lazyReportBatch(data) {
     }
 }
 
+//页面卸载时强制上报数据
+window.addEventListener('beforeunload', () => {
+    const cachesData = getCaches();
+    if (cachesData.length) {
+        report(cachesData)
+        clearCaches()
+    }
+}, true)
+//页面隐藏，如切换到后台时候
+window.addEventListener('visibilitychange', () => {
+    const cachesData = getCaches();
+    if (cachesData.length) {
+        report(cachesData)
+        clearCaches()
+    }
+})
 
 //img 上报
 export function imgRequest(data) {

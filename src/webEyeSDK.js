@@ -2,7 +2,7 @@ import performance from "./performance";
 import error from "./error";
 import behavior from "./behavior";
 
-import { getConfig, setConfig } from './config'
+import { setConfig } from './config'
 import { lazyReportBatch } from "./report";
 
 //针对 vue / react 的 收集
@@ -15,6 +15,10 @@ window.__webEyeSDK__ = {
 export function install(Vue, options) {
     if (__webEyeSDK__.vue) return//说明vue已经注册过了
     __webEyeSDK__.vue = true
+
+
+    setConfig(options)
+
     const handler = Vue.config.errorHandler;
     //vue 项目中通过 Vue.config.errorHandler 捕获错误
     Vue.config.errorHandler = function (err, vm, info) {
@@ -23,10 +27,10 @@ export function install(Vue, options) {
             error: err.stack,
             subType: 'vue',
             type: 'error',
-            startTime: performance.now(),
+            startTime: window.performance.now(),
             pageUrl: window.location.href
         }
-        //todo: 上报具体的错误信息
+        console.log('vue 监控初始化', reportData)
         lazyReportBatch(reportData)
         if (handler) {
             handler.call(this, err, vm, info)
@@ -44,7 +48,7 @@ function errorBoundary(err, info) {
         info,
         subType: 'react',
         type: 'error',
-        startTime: performance.now(),
+        startTime: window.performance.now(),
         pageUrl: window.location.href
     }
     lazyReportBatch(reportData)
@@ -62,7 +66,9 @@ function errorBoundary(err, info) {
 */
 export function init(options) {
     setConfig(options)
+    performance()
     error()
+    behavior()
 }
 
 export default {

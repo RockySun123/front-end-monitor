@@ -17,6 +17,7 @@ export default function observerEntries() {
     }
 }
 export function observerEvent() {
+    console.log('observerEvent')
     const entryHandler = (list) => {
         const data = list.getEntries()
         for (const entry of data) {
@@ -40,11 +41,8 @@ export function observerEvent() {
                 resourceSize: entry.decodedBodySize,//资源解压后的大小，可能为0，从缓存中取
                 transferSize: entry.transferSize,//真实请求内容大小 可能为0，从缓存中取
                 startTime: performance.now()
-                // tcp:entry.connectEnd-entry.connectStart,//tcp时间
-                // ssl:entry.connectEnd-entry.secureConnectionStart,
-                // trans:entry.responseEnd-entry.responseStart,//传输时间
+
             }
-            // console.log(entry)
             lazyReportBatch(reportData)
         }
     }
